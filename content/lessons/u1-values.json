@@ -1,0 +1,272 @@
+{
+  "id": "u1-values",
+  "unit": 1,
+  "stage": "grammar",
+  "title": "What things are worth",
+  "summary": "The few facts every later question depends on: piece values, and what loose and defended mean.",
+  "steps": [
+    {
+      "id": "values-intro",
+      "kind": "read",
+      "concepts": [
+        "piece-value"
+      ],
+      "title": "Counting in pawns",
+      "text": "Before you can reason about a position you need a way to count. Chess players count in pawns:\n\n**Pawn 1 · Knight 3 · Bishop 3 · Rook 5 · Queen 9**\n\nThe king has no price. Lose it and the game is over, so it is never traded.\n\nThese numbers are rough. A well-placed knight can be worth more than a buried rook. But they are right often enough that you should know them without thinking, the way you know your own phone number. This is one of the few things in the course worth memorising.",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "ask": {
+        "question": "A rook and a pawn, against a bishop and a knight. Who has more, on paper?",
+        "answer": "Neither. Rook plus pawn is 5 + 1 = 6. Bishop plus knight is 3 + 3 = 6. When the count is even, the position decides, and that is what the rest of the course is about."
+      },
+      "claims": [
+        {
+          "is": "value",
+          "role": "p",
+          "n": 1
+        },
+        {
+          "is": "value",
+          "role": "n",
+          "n": 3
+        },
+        {
+          "is": "value",
+          "role": "b",
+          "n": 3
+        },
+        {
+          "is": "value",
+          "role": "r",
+          "n": 5
+        },
+        {
+          "is": "value",
+          "role": "q",
+          "n": 9
+        }
+      ]
+    },
+    {
+      "id": "loose-defined",
+      "kind": "read",
+      "concepts": [
+        "loose",
+        "defended"
+      ],
+      "title": "Loose and defended",
+      "text": "A piece is **defended** when one of its own side could take back if it were captured. A piece that nothing defends is **loose**.\n\nLoose does not mean attacked. It means that if something ever does attack it, there is no answer ready. That is why loose pieces are where tactics come from.\n\nHere the knight on @d5 is defended by the pawn on @e6. The bishop on @g4 is loose.",
+      "fen": "4k3/8/4p3/3n4/6b1/8/8/4K3 w - - 0 1",
+      "marks": [
+        "d5",
+        "g4"
+      ],
+      "claims": [
+        {
+          "is": "not-loose",
+          "sq": "d5"
+        },
+        {
+          "is": "attacks",
+          "from": "e6",
+          "to": [
+            "d5"
+          ]
+        },
+        {
+          "is": "loose",
+          "sq": "g4"
+        }
+      ]
+    },
+    {
+      "id": "sandbox-attacks",
+      "kind": "sandbox",
+      "concepts": [
+        "loose",
+        "defended"
+      ],
+      "prompt": "Play with the board. Tap a piece to see what it attacks. Drag pieces anywhere, or drop new ones from the tray. Loose pieces are ringed.",
+      "text": "Try this: put a white rook on an open file facing a black piece. Is the black piece loose? Now add a black pawn that protects it and watch the ring disappear.",
+      "fen": "4k3/pp4pp/2n5/8/3P4/2B5/PP4PP/4K3 w - - 0 1",
+      "palette": true
+    },
+    {
+      "id": "tap-loose-black",
+      "kind": "tap",
+      "concepts": [
+        "loose"
+      ],
+      "prompt": "Tap every loose @B piece.",
+      "fen": "2r3k1/pp1b1ppp/2n5/4p3/8/2N2N2/PPP2PPP/3R2K1 w - - 0 1",
+      "find": {
+        "what": "loose",
+        "color": "b"
+      },
+      "answer": [
+        "b7",
+        "d7"
+      ],
+      "explain": "The bishop on @d7 and the pawn on @b7 have no protector. Everything else @B owns has at least one: the knight on @c6 covers @a7 and @e5, the bishop covers the rook, and the king covers the pawns in front of it.",
+      "claims": [
+        {
+          "is": "attacks",
+          "from": "c6",
+          "to": [
+            "a7",
+            "e5"
+          ]
+        },
+        {
+          "is": "attacks",
+          "from": "d7",
+          "to": [
+            "c8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap-defenders",
+      "kind": "tap",
+      "concepts": [
+        "defended"
+      ],
+      "prompt": "Tap every @B piece that defends the knight on @c6.",
+      "fen": "2r3k1/pp1b1ppp/2n5/4p3/8/2N2N2/PPP2PPP/3R2K1 w - - 0 1",
+      "find": {
+        "what": "defenders",
+        "sq": "c6"
+      },
+      "answer": [
+        "b7",
+        "c8",
+        "d7"
+      ],
+      "explain": "Three defenders: the pawn on @b7, the bishop on @d7, and the rook on @c8 straight down the file. A piece with three defenders is in no danger from one attacker."
+    },
+    {
+      "id": "trade-good",
+      "kind": "choice",
+      "concepts": [
+        "trades",
+        "piece-value"
+      ],
+      "prompt": "@W can take the rook on @a8 with the bishop.",
+      "fen": "r5k1/2n2ppp/8/8/8/2N3P1/5PBP/6K1 w - - 0 1",
+      "arrow": [
+        "g2",
+        "a8"
+      ],
+      "question": "The knight on @c7 will take back. Is Bx@a8 a good trade for @W?",
+      "choices": [
+        {
+          "text": "Yes. @W gives a bishop (3) and gets a rook (5), and comes out two points ahead.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "value",
+              "role": "b",
+              "n": 3
+            },
+            {
+              "is": "value",
+              "role": "r",
+              "n": 5
+            },
+            {
+              "is": "defenders",
+              "sq": "a8",
+              "n": 1
+            },
+            {
+              "is": "best",
+              "move": "g2a8"
+            }
+          ]
+        },
+        {
+          "text": "No. The rook is defended, so taking it just loses the bishop.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "not-best",
+              "move": "g2a8"
+            }
+          ]
+        },
+        {
+          "text": "It makes no difference. A piece for a piece is an even trade.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "value",
+              "role": "r",
+              "n": 3
+            }
+          ]
+        }
+      ],
+      "explain": "Defended does not mean safe. It means the capture turns into a trade, and then you count what changes hands: rook for bishop, 5 for 3."
+    },
+    {
+      "id": "trade-bad",
+      "kind": "choice",
+      "concepts": [
+        "trades",
+        "defended"
+      ],
+      "prompt": "@W's rook can take the knight on @d5.",
+      "fen": "6k1/5ppp/4p3/3n4/8/8/5PPP/3R2K1 w - - 0 1",
+      "arrow": [
+        "d1",
+        "d5"
+      ],
+      "question": "Is Rx@d5 a good idea?",
+      "choices": [
+        {
+          "text": "No. The pawn on @e6 takes back, and @W has swapped a rook (5) for a knight (3).",
+          "correct": true,
+          "claims": [
+            {
+              "is": "defenders",
+              "sq": "d5",
+              "n": 1
+            },
+            {
+              "is": "attacks",
+              "from": "e6",
+              "to": [
+                "d5"
+              ]
+            },
+            {
+              "is": "not-best",
+              "move": "d1d5"
+            }
+          ]
+        },
+        {
+          "text": "Yes. Winning a knight is always good.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "best",
+              "move": "d1d5"
+            }
+          ]
+        },
+        {
+          "text": "Yes, because the knight is loose.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "loose",
+              "sq": "d5"
+            }
+          ]
+        }
+      ],
+      "explain": "Before any capture, ask what takes back. Here a pawn does, and a trade that gives 5 for 3 loses two points."
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "id": "u2-fork-grammar",
+  "unit": 2,
+  "stage": "grammar",
+  "title": "What a fork is",
+  "summary": "One piece attacking two real targets. How the knight moves, and what counts as a target.",
+  "steps": [
+    {
+      "id": "fork-defined",
+      "kind": "read",
+      "concepts": [
+        "fork"
+      ],
+      "title": "Two targets, one move",
+      "text": "A **fork** is one piece attacking two targets at the same time. Your opponent has one move to answer, and usually one move saves only one target.\n\nThe name is new, but the idea isn't. A fork is just a move that creates two threats at once, and a threat, from the last unit, is an attack on something that can be won.\n\nHere the @w knight on @c7 checks the king and attacks the rook on @a8. The king must move, and then the rook falls.",
+      "fen": "r3k3/ppN2ppp/4p3/8/8/8/PP3PPP/4K3 b - - 0 1",
+      "marks": [
+        "a8",
+        "e8"
+      ],
+      "arrows": [
+        [
+          "c7",
+          "a8"
+        ],
+        [
+          "c7",
+          "e8"
+        ]
+      ],
+      "claims": [
+        {
+          "is": "fork",
+          "sq": "c7"
+        },
+        {
+          "is": "attacks",
+          "from": "c7",
+          "to": [
+            "a8",
+            "e8"
+          ]
+        },
+        {
+          "is": "loose",
+          "sq": "a8"
+        }
+      ]
+    },
+    {
+      "id": "tap-knight-squares",
+      "kind": "tap",
+      "concepts": [
+        "fork"
+      ],
+      "prompt": "Knights make the most forks, so you need to see their squares instantly. Tap every square the knight on @e5 attacks.",
+      "fen": "4k3/pp6/8/4N3/8/8/PP6/4K3 w - - 0 1",
+      "find": {
+        "what": "attacks",
+        "from": "e5"
+      },
+      "answer": [
+        "c4",
+        "c6",
+        "d3",
+        "d7",
+        "f3",
+        "f7",
+        "g4",
+        "g6"
+      ],
+      "explain": "Eight squares in a ring. Notice that a knight always lands on the opposite colour from where it stands. That is a quick check: a knight on a dark square can only ever fork pieces on light squares."
+    },
+    {
+      "id": "sandbox-knight",
+      "kind": "sandbox",
+      "concepts": [
+        "fork"
+      ],
+      "prompt": "Drag the @w knight around. Tap it to see what it attacks. Can you find a square where it hits the king and the rook at once? And one where it hits the queen and the rook?",
+      "text": "There is more than one answer. When you find one, ask whether @B could just take the knight there.",
+      "fen": "r3k3/pp3ppp/8/3q4/8/8/PP3PPP/1N2K3 w - - 0 1",
+      "palette": true
+    },
+    {
+      "id": "tap-fork-targets",
+      "kind": "tap",
+      "concepts": [
+        "fork",
+        "defended"
+      ],
+      "prompt": "The knight on @c7 attacks three @b units. Tap only the ones it truly threatens.",
+      "fen": "r3k3/ppN2ppp/4p3/8/8/8/PP3PPP/4K3 b - - 0 1",
+      "find": {
+        "what": "fork-targets",
+        "sq": "c7"
+      },
+      "answer": [
+        "a8",
+        "e8"
+      ],
+      "explain": "The pawn on @e6 is attacked, but the pawn on @f7 defends it, so taking it would cost the knight. A real target is the king, anything worth more than the attacker, or anything loose.",
+      "claims": [
+        {
+          "is": "attacks",
+          "from": "c7",
+          "to": [
+            "e6"
+          ]
+        },
+        {
+          "is": "defenders",
+          "sq": "e6",
+          "n": 1
+        }
+      ]
+    },
+    {
+      "id": "fork-conditions",
+      "kind": "read",
+      "concepts": [
+        "fork"
+      ],
+      "title": "What makes a fork work",
+      "text": "A fork works when three things are true:\n\n1. **Two real targets.** The king, a piece worth more than the forking piece, or a loose piece.\n2. **The forking piece is safe.** If they can take it for free, there is no fork, only a gift.\n3. **One move can't answer both.** Watch for a move that defends one target while moving the other, or a check that comes first.\n\nThese are questions you can check on any board. The next lesson is about asking them."
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "id": "u2-fork-explain",
+  "unit": 2,
+  "stage": "rhetoric",
+  "title": "Defend your fork",
+  "summary": "Answer objections to forks with the three conditions.",
+  "steps": [
+    {
+      "id": "objection-fork-covered",
+      "kind": "choice",
+      "concepts": [
+        "fork",
+        "defended"
+      ],
+      "prompt": "A friend sees this and says: \"N@c7+ forks the king and rook. Free rook.\"",
+      "fen": "r2bk3/pp3ppp/8/1N6/8/8/PP3PPP/4K3 w - - 0 1",
+      "arrow": [
+        "b5",
+        "c7"
+      ],
+      "question": "What's your answer?",
+      "choices": [
+        {
+          "text": "It isn't a fork, because the knight isn't safe on @c7. The bishop on @d8 takes it.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "attacks",
+              "from": "d8",
+              "to": [
+                "c7"
+              ]
+            },
+            {
+              "after": [
+                "b5c7"
+              ],
+              "is": "not-fork",
+              "sq": "c7"
+            },
+            {
+              "is": "not-wins",
+              "move": "b5c7",
+              "cp": 0
+            }
+          ]
+        },
+        {
+          "text": "They're right. A check always wins time.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "wins",
+              "move": "b5c7",
+              "cp": 100
+            }
+          ]
+        },
+        {
+          "text": "It fails because the rook is defended.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "not-loose",
+              "sq": "a8"
+            }
+          ]
+        }
+      ],
+      "explain": "Name the condition that fails and point at the piece that makes it fail."
+    },
+    {
+      "id": "objection-pawn-fork",
+      "kind": "choice",
+      "concepts": [
+        "fork",
+        "piece-value"
+      ],
+      "prompt": "Your friend says about @e4 here: \"You're just hanging a pawn. The bishop takes it.\"",
+      "fen": "6k1/pp3ppp/8/3n1b2/8/3PP3/PP3PPP/3R2K1 w - - 0 1",
+      "arrow": [
+        "e3",
+        "e4"
+      ],
+      "question": "How do you answer?",
+      "choices": [
+        {
+          "text": "If the bishop takes, the pawn on @d3 takes back. @B loses a bishop for a pawn, and if they don't take, they lose a piece anyway.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "attacks",
+              "from": "d3",
+              "to": [
+                "e4"
+              ]
+            },
+            {
+              "after": [
+                "e3e4"
+              ],
+              "is": "not-hanging",
+              "sq": "e4"
+            },
+            {
+              "is": "wins",
+              "move": "e3e4",
+              "cp": 250
+            }
+          ]
+        },
+        {
+          "text": "The bishop can't reach @e4.",
+          "correct": false,
+          "claims": [
+            {
+              "after": [
+                "e3e4"
+              ],
+              "is": "not-attacks",
+              "from": "f5",
+              "to": [
+                "e4"
+              ]
+            }
+          ]
+        },
+        {
+          "text": "They're right, but a pawn doesn't matter.",
+          "correct": false,
+          "claims": [
+            {
+              "after": [
+                "e3e4"
+              ],
+              "is": "hanging",
+              "sq": "e4"
+            }
+          ]
+        }
+      ],
+      "explain": "The objection is half right: the bishop does attack @e4. The full answer counts the exchange."
+    },
+    {
+      "id": "teach-back-fork",
+      "kind": "read",
+      "concepts": [
+        "fork"
+      ],
+      "title": "Teach it back",
+      "text": "Before revealing the answer, explain it in your own words, out loud or on paper.",
+      "ask": {
+        "question": "What three things do you check before playing a fork?",
+        "answer": "Two real targets: the king, something worth more than the forking piece, or something loose. The forking piece must be safe where it lands. And there must be no single reply that deals with both threats, such as a move that saves one target while defending the other, or a check of their own."
+      }
+    }
+  ]
+}

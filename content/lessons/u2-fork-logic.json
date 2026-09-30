@@ -1,0 +1,351 @@
+{
+  "id": "u2-fork-logic",
+  "unit": 2,
+  "stage": "logic",
+  "title": "Why forks work",
+  "summary": "Build forks, break them, and find them in positions you haven't seen.",
+  "steps": [
+    {
+      "id": "miw-knight",
+      "kind": "make-it-work",
+      "concepts": [
+        "fork"
+      ],
+      "prompt": "Place a @w knight on a square where it forks the king and the queen, and where @B can't simply take it.",
+      "fen": "6k1/5ppp/8/3q4/8/8/5PPP/6K1 w - - 0 1",
+      "goal": "fork",
+      "place": {
+        "color": "w",
+        "role": "n"
+      },
+      "example": "e7",
+      "explain": "From @e7 the knight hits @g8 and @d5, and no @b piece covers @e7. On @f6 it would hit both too, but the pawn on @g7 takes it: the second condition fails.",
+      "claims": [
+        {
+          "is": "attacks",
+          "from": "g7",
+          "to": [
+            "f6"
+          ]
+        },
+        {
+          "is": "not-attacks",
+          "from": "d5",
+          "to": [
+            "e7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "miw-pawn",
+      "kind": "make-it-work",
+      "concepts": [
+        "fork",
+        "piece-value"
+      ],
+      "prompt": "Place a @w pawn where it forks both bishops and is safe.",
+      "fen": "6k1/5ppp/8/2b1b3/8/4P3/5PPP/6K1 w - - 0 1",
+      "goal": "fork",
+      "place": {
+        "color": "w",
+        "role": "p"
+      },
+      "example": "d4",
+      "explain": "On @d4 the pawn attacks @c5 and @e5. If a bishop takes it, the pawn on @e3 takes back, and @B has given 3 for 1. The cheapest piece makes the best forker: anything it attacks is worth more than it.",
+      "claims": [
+        {
+          "is": "attacks",
+          "from": "e3",
+          "to": [
+            "d4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nm-fork-covered",
+      "kind": "near-miss",
+      "concepts": [
+        "fork",
+        "defended"
+      ],
+      "prompt": "N@c7+ wins the rook in one of these positions and loses the knight in the other.",
+      "a": "r3k3/pp3ppp/8/1N6/8/8/PP3PPP/4K3 w - - 0 1",
+      "b": "r2bk3/pp3ppp/8/1N6/8/8/PP3PPP/4K3 w - - 0 1",
+      "move": "b5c7",
+      "works": "a",
+      "diff": [
+        "d8"
+      ],
+      "question": "Which fork condition fails in the other position?",
+      "choices": [
+        {
+          "text": "The forking piece isn't safe. The bishop on @d8 covers @c7 and takes the knight.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "attacks",
+              "from": "d8",
+              "to": [
+                "c7"
+              ]
+            },
+            {
+              "after": [
+                "b5c7"
+              ],
+              "is": "not-fork",
+              "sq": "c7"
+            }
+          ]
+        },
+        {
+          "text": "There's only one target, because the rook on @a8 is now defended.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "not-loose",
+              "sq": "a8"
+            }
+          ]
+        },
+        {
+          "text": "N@c7 is no longer possible.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "illegal",
+              "move": "b5c7"
+            }
+          ]
+        }
+      ],
+      "explain": "Both targets are still there. The difference is condition two: a fork on a square the enemy controls is a gift."
+    },
+    {
+      "id": "pz-royal-fork",
+      "kind": "puzzle",
+      "concepts": [
+        "fork",
+        "threats"
+      ],
+      "prompt": "@W to move. Your knight is attacked twice. Find something better than retreating.",
+      "fen": "5rk1/pp3ppp/2q1b3/3N4/8/8/PP3PPP/3Q1RK1 w - - 0 1",
+      "line": [
+        "d5e7",
+        "g8h8",
+        "e7c6"
+      ],
+      "goal": "win",
+      "scaffold": [
+        {
+          "prompt": "Which @W piece is threatened? Tap it.",
+          "find": {
+            "what": "hanging",
+            "color": "w"
+          }
+        },
+        {
+          "prompt": "Tap every square your knight on @d5 attacks.",
+          "find": {
+            "what": "attacks",
+            "from": "d5"
+          }
+        }
+      ],
+      "tempting": {
+        "move": "d5f6",
+        "refutation": [
+          "g7f6"
+        ],
+        "explain": "N@f6+ is also a check, but it attacks nothing else, and the pawn on @g7 just takes the knight. One target is not a fork."
+      },
+      "reasons": {
+        "question": "Why does N@e7+ win the queen?",
+        "choices": [
+          {
+            "text": "It checks the king and attacks the queen, and no @b piece can take the knight on @e7.",
+            "correct": true,
+            "claims": [
+              {
+                "is": "check",
+                "move": "d5e7"
+              },
+              {
+                "after": [
+                  "d5e7"
+                ],
+                "is": "attacks",
+                "from": "e7",
+                "to": [
+                  "g8",
+                  "c6"
+                ]
+              },
+              {
+                "after": [
+                  "d5e7"
+                ],
+                "is": "attackers",
+                "sq": "e7",
+                "by": "b",
+                "n": 0
+              }
+            ]
+          },
+          {
+            "text": "The queen on @c6 is loose.",
+            "correct": false,
+            "claims": [
+              {
+                "is": "loose",
+                "sq": "c6"
+              }
+            ]
+          },
+          {
+            "text": "The king has nowhere to go, so it is checkmate.",
+            "correct": false,
+            "claims": [
+              {
+                "after": [
+                  "d5e7"
+                ],
+                "is": "illegal",
+                "move": "g8h8"
+              }
+            ]
+          }
+        ]
+      },
+      "hints": [
+        "A check forces an answer. Which knight moves give check?",
+        "Of the knight checks, which one also attacks something big?",
+        "Look at @e7."
+      ],
+      "explain": "Two real targets, one of them the king, and a safe square. All three conditions hold. The check matters: because @B must answer it first, there is no time to save the queen."
+    },
+    {
+      "id": "pz-pawn-fork",
+      "kind": "puzzle",
+      "concepts": [
+        "fork",
+        "piece-value"
+      ],
+      "prompt": "@W to move. Win material.",
+      "fen": "6k1/pp3ppp/8/3n1b2/8/3PP3/PP3PPP/3R2K1 w - - 0 1",
+      "line": [
+        "e3e4"
+      ],
+      "goal": "win",
+      "hints": [
+        "Which of your pieces is the cheapest attacker?",
+        "A pawn attacks two squares, diagonally forward.",
+        "Look at @e4. Is a pawn safe there?"
+      ],
+      "reasons": {
+        "question": "Why does @e4 win a piece?",
+        "choices": [
+          {
+            "text": "The pawn attacks the knight and the bishop at once, and the pawn on @d3 guards it.",
+            "correct": true,
+            "claims": [
+              {
+                "after": [
+                  "e3e4"
+                ],
+                "is": "attacks",
+                "from": "e4",
+                "to": [
+                  "d5",
+                  "f5"
+                ]
+              },
+              {
+                "after": [
+                  "e3e4"
+                ],
+                "is": "fork",
+                "sq": "e4"
+              },
+              {
+                "is": "attacks",
+                "from": "d3",
+                "to": [
+                  "e4"
+                ]
+              }
+            ]
+          },
+          {
+            "text": "Pawns are worth more than minor pieces, so any trade with a pawn favours @W.",
+            "correct": false,
+            "claims": [
+              {
+                "is": "value",
+                "role": "p",
+                "n": 3
+              }
+            ]
+          },
+          {
+            "text": "@B can take the pawn with the bishop and come out ahead.",
+            "correct": false,
+            "claims": [
+              {
+                "after": [
+                  "e3e4"
+                ],
+                "is": "hanging",
+                "sq": "e4"
+              }
+            ]
+          }
+        ]
+      },
+      "explain": "Worth 1, attacking two pieces worth 3. The pawn is the best forker on the board because everything it attacks is worth more than it is."
+    },
+    {
+      "id": "pz-queen-fork",
+      "kind": "puzzle",
+      "concepts": [
+        "fork",
+        "loose"
+      ],
+      "prompt": "@W to move. Win material.",
+      "fen": "4k2r/ppp2ppp/1q1p4/8/7b/2P5/PP1NBPPP/3Q1RK1 w k - 0 1",
+      "line": [
+        "d1a4"
+      ],
+      "goal": "win",
+      "hints": [
+        "Which @B pieces are loose?",
+        "Can your queen check the king and attack the bishop on @h4 in one move?",
+        "A queen can attack along a diagonal and a rank at the same time."
+      ],
+      "explain": "The bishop on @h4 is loose, and the king is open on the diagonal. Q@a4+ checks along one line and attacks along another. @B has to deal with the check, and then the bishop goes.",
+      "claims": [
+        {
+          "is": "loose",
+          "sq": "h4"
+        },
+        {
+          "is": "check",
+          "move": "d1a4"
+        },
+        {
+          "after": [
+            "d1a4"
+          ],
+          "is": "attacks",
+          "from": "a4",
+          "to": [
+            "e8",
+            "h4"
+          ]
+        }
+      ]
+    }
+  ]
+}

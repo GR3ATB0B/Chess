@@ -1,0 +1,235 @@
+{
+  "id": "u1-counting",
+  "unit": 1,
+  "stage": "logic",
+  "title": "Attackers and defenders",
+  "summary": "When a piece is defended, count. And start the exchange with your cheapest piece.",
+  "steps": [
+    {
+      "id": "count-intro",
+      "kind": "read",
+      "concepts": [
+        "counting"
+      ],
+      "title": "Counting an exchange",
+      "text": "A defended piece can still be won. The question changes from *is it loose?* to *who runs out of recaptures first?*\n\nCount the attackers. Count the defenders. If you have more attackers, and your first capture doesn't hand back more than it takes, you win something.\n\nHere the bishop on @e5 is attacked twice, by the knight on @f3 and the rook on @e1. It is defended once, by the knight on @d7.",
+      "fen": "3r2k1/pp1n1ppp/8/4b3/8/5N1P/PP3PP1/2B1R1K1 w - - 0 1",
+      "marks": [
+        "e5"
+      ],
+      "arrows": [
+        [
+          "f3",
+          "e5"
+        ],
+        [
+          "e1",
+          "e5"
+        ],
+        [
+          "d7",
+          "e5"
+        ]
+      ],
+      "ask": {
+        "question": "Play it out in your head: Nx@e5 Nx@e5 Rx@e5. Who is ahead at the end?",
+        "answer": "@W. @W took a bishop and a knight (6) and gave a knight (3). A clean bishop up."
+      },
+      "claims": [
+        {
+          "is": "attackers",
+          "sq": "e5",
+          "by": "w",
+          "n": 2
+        },
+        {
+          "is": "defenders",
+          "sq": "e5",
+          "n": 1
+        },
+        {
+          "is": "see",
+          "sq": "e5",
+          "by": "w",
+          "gain": 3
+        },
+        {
+          "is": "best",
+          "move": "f3e5"
+        }
+      ]
+    },
+    {
+      "id": "tap-attackers-e5",
+      "kind": "tap",
+      "concepts": [
+        "counting"
+      ],
+      "prompt": "Tap every @W piece that attacks @e5.",
+      "fen": "3r2k1/pp1n1ppp/8/4b3/8/5N1P/PP3PP1/2B1R1K1 w - - 0 1",
+      "find": {
+        "what": "attackers",
+        "sq": "e5",
+        "color": "w"
+      },
+      "answer": [
+        "e1",
+        "f3"
+      ],
+      "explain": "The knight on @f3 and the rook on @e1. The bishop on @c1 stands on the same colour as @e5 but on a different diagonal, so it doesn't count.",
+      "claims": [
+        {
+          "is": "not-attacks",
+          "from": "c1",
+          "to": [
+            "e5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tap-defenders-e5",
+      "kind": "tap",
+      "concepts": [
+        "counting",
+        "defended"
+      ],
+      "prompt": "Now tap every @B piece that defends @e5.",
+      "fen": "3r2k1/pp1n1ppp/8/4b3/8/5N1P/PP3PP1/2B1R1K1 w - - 0 1",
+      "find": {
+        "what": "defenders",
+        "sq": "e5"
+      },
+      "answer": [
+        "d7"
+      ],
+      "explain": "Only the knight on @d7. Two attackers against one defender."
+    },
+    {
+      "id": "nm-count",
+      "kind": "near-miss",
+      "concepts": [
+        "counting"
+      ],
+      "prompt": "In one of these positions Nx@e5 wins a piece. In the other it is just a trade.",
+      "a": "3r2k1/pp1n1ppp/8/4b3/8/5N1P/PP3PP1/2B1R1K1 w - - 0 1",
+      "b": "3r2k1/pp1n1ppp/8/4b3/8/5N1P/PP3PP1/R1B3K1 w - - 0 1",
+      "move": "f3e5",
+      "works": "a",
+      "diff": [
+        "a1",
+        "e1"
+      ],
+      "question": "In the other position, why is Nx@e5 only a trade?",
+      "choices": [
+        {
+          "text": "The rook is on @a1, no longer on the file that leads to @e5. Now it is one attacker against one defender.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "attackers",
+              "sq": "e5",
+              "by": "w",
+              "n": 1
+            },
+            {
+              "is": "defenders",
+              "sq": "e5",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "text": "The bishop on @e5 is loose there.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "loose",
+              "sq": "e5"
+            }
+          ]
+        },
+        {
+          "text": "The knight on @f3 cannot move.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "illegal",
+              "move": "f3e5"
+            }
+          ]
+        }
+      ],
+      "explain": "Same bishop, same defender. What changed is the count: take away the second attacker and Nx@e5 Nx@e5 ends the sequence with nothing gained."
+    },
+    {
+      "id": "choice-capture-order",
+      "kind": "choice",
+      "concepts": [
+        "counting",
+        "trades"
+      ],
+      "prompt": "The knight on @d5 is attacked twice, by the knight on @c3 and the queen on @d1. It is defended once, by the rook on @a5.",
+      "fen": "6k1/pp3ppp/6b1/r2n4/8/2N5/PP3PPP/3Q2K1 w - - 0 1",
+      "question": "Which capture should come first?",
+      "choices": [
+        {
+          "text": "Nx@d5. Start with the cheaper piece. If the rook takes back, the queen takes the rook.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "attackers",
+              "sq": "d5",
+              "by": "w",
+              "n": 2
+            },
+            {
+              "is": "defenders",
+              "sq": "d5",
+              "n": 1
+            },
+            {
+              "is": "see",
+              "sq": "d5",
+              "by": "w",
+              "gain": 3
+            },
+            {
+              "is": "best",
+              "move": "c3d5"
+            }
+          ]
+        },
+        {
+          "text": "Qx@d5. The queen is the strongest attacker, so it should lead.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "wins",
+              "move": "d1d5",
+              "cp": 150
+            }
+          ]
+        },
+        {
+          "text": "Either one. Two attackers beat one defender, whatever the order.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "wins",
+              "move": "d1d5",
+              "cp": 150
+            }
+          ]
+        }
+      ],
+      "explain": "Counting heads is not enough; you also count values. Qx@d5 Rx@d5 Nx@d5 gives a queen (9) for a knight and a rook (8). Nx@d5 first risks only a knight.",
+      "claims": [
+        {
+          "is": "not-best",
+          "move": "d1d5"
+        }
+      ]
+    }
+  ]
+}

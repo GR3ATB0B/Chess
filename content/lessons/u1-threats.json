@@ -1,0 +1,161 @@
+{
+  "id": "u1-threats",
+  "unit": 1,
+  "stage": "logic",
+  "title": "What are they threatening?",
+  "summary": "Turn the questions around. Before you move, look at the board from the other side.",
+  "steps": [
+    {
+      "id": "threats-intro",
+      "kind": "read",
+      "concepts": [
+        "threats"
+      ],
+      "title": "Look from the other side",
+      "text": "Everything so far has been about what you can win. The same questions protect you when you ask them about your own pieces.\n\nA **threat** is something your opponent could win if it were their move. The quick test: which of my pieces could they capture and come out ahead?\n\nGood players do this before every move, as a routine, the way a pilot runs a checklist. It takes a few seconds and prevents most lost games.",
+      "fen": "5rk1/pp3ppp/1q6/1B1p4/4N3/8/PP3PPP/5RK1 w - - 0 1"
+    },
+    {
+      "id": "tap-threats",
+      "kind": "tap",
+      "concepts": [
+        "threats"
+      ],
+      "prompt": "@W to move. Tap every @W piece that @B is threatening to win.",
+      "fen": "5rk1/pp3ppp/1q6/1B1p4/4N3/8/PP3PPP/5RK1 w - - 0 1",
+      "find": {
+        "what": "hanging",
+        "color": "w"
+      },
+      "answer": [
+        "b5",
+        "e4"
+      ],
+      "explain": "The pawn on @d5 attacks the knight, and the queen on @b6 attacks the loose bishop. Two threats, and one move can't meet both. Seeing threats before they arrive is how you avoid positions like this one.",
+      "claims": [
+        {
+          "is": "attacks",
+          "from": "d5",
+          "to": [
+            "e4"
+          ]
+        },
+        {
+          "is": "attacks",
+          "from": "b6",
+          "to": [
+            "b5"
+          ]
+        },
+        {
+          "is": "loose",
+          "sq": "b5"
+        }
+      ]
+    },
+    {
+      "id": "pz-nxb5",
+      "kind": "puzzle",
+      "concepts": [
+        "threats",
+        "loose"
+      ],
+      "prompt": "@W to move. Your knight on @d4 is attacked. Deal with it, and do better than just running away.",
+      "fen": "2r3k1/p4ppp/1p6/1b2p3/3N4/8/PP3PPP/3R2K1 w - - 0 1",
+      "line": [
+        "d4b5"
+      ],
+      "goal": "win",
+      "scaffold": [
+        {
+          "prompt": "Which @W piece is under threat? Tap it.",
+          "find": {
+            "what": "hanging",
+            "color": "w"
+          }
+        },
+        {
+          "prompt": "Now tap every loose @B piece.",
+          "find": {
+            "what": "loose",
+            "color": "b"
+          }
+        }
+      ],
+      "tempting": {
+        "move": "d4c6",
+        "refutation": [
+          "b5c6"
+        ],
+        "explain": "N@c6 attacks two pawns and looks like a fork. But the bishop on @b5 simply takes the knight. A fork on a square the enemy controls is a gift."
+      },
+      "reasons": {
+        "question": "Why is Nx@b5 the right answer?",
+        "choices": [
+          {
+            "text": "It moves the attacked knight and captures a loose bishop in the same move.",
+            "correct": true,
+            "claims": [
+              {
+                "is": "hanging",
+                "sq": "d4"
+              },
+              {
+                "is": "loose",
+                "sq": "b5"
+              },
+              {
+                "is": "best",
+                "move": "d4b5"
+              }
+            ]
+          },
+          {
+            "text": "Any knight move is about as good. The bishop was not the point.",
+            "correct": false,
+            "claims": [
+              {
+                "is": "not-best",
+                "move": "d4b5"
+              }
+            ]
+          },
+          {
+            "text": "The knight on @d4 was never really in danger.",
+            "correct": false,
+            "claims": [
+              {
+                "is": "not-hanging",
+                "sq": "d4"
+              }
+            ]
+          }
+        ]
+      },
+      "hints": [
+        "What does the pawn on @e5 attack?",
+        "The knight has to move. Is there a square where it captures something?",
+        "The bishop on @b5 is loose."
+      ],
+      "explain": "Two questions, asked in order. What are they threatening? The knight. What is loose? The bishop. The move that answers both is the one to play.",
+      "claims": [
+        {
+          "is": "attacks",
+          "from": "b5",
+          "to": [
+            "c6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cct-routine",
+      "kind": "read",
+      "concepts": [
+        "threats"
+      ],
+      "title": "A routine before every move",
+      "text": "Here is the routine this course will keep asking you to run. It is short on purpose.\n\n1. **What did their last move threaten?** Look at what it attacks now.\n2. **What is loose?** Theirs and yours.\n3. **Checks, captures, threats.** List your forcing moves before your quiet ones.\n4. **Blunder check.** After the move you want to play, what is loose, and what can they take?\n\nYou can turn on a reminder of this routine in Settings. It will appear above the board in puzzles until the habit is yours."
+    }
+  ]
+}

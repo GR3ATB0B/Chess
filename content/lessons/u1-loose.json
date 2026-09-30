@@ -1,0 +1,291 @@
+{
+  "id": "u1-loose",
+  "unit": 1,
+  "stage": "logic",
+  "title": "Loose pieces drop off",
+  "summary": "The first question to ask on every move, and why it finds so many tactics.",
+  "steps": [
+    {
+      "id": "lpdo-intro",
+      "kind": "read",
+      "concepts": [
+        "loose"
+      ],
+      "title": "The first question",
+      "text": "Here is a question to ask every single move: **what is loose?**\n\nAttacking a defended piece usually just offers a trade. Attacking a loose piece is a real threat, because there is no recapture waiting. Most tactics begin with a loose piece, even the fancy ones.\n\nOn this board @B has two loose pieces. You found them in the last lesson. One of them is already attacked.",
+      "fen": "2r3k1/pp1b1ppp/2n5/4p3/8/2N2N2/PPP2PPP/3R2K1 w - - 0 1",
+      "marks": [
+        "b7",
+        "d7"
+      ],
+      "arrows": [
+        [
+          "d1",
+          "d7"
+        ]
+      ],
+      "ask": {
+        "question": "What can @W play here?",
+        "answer": "Rxd7. The bishop on @d7 is loose and the rook sees it down the open file, so it is simply free."
+      },
+      "claims": [
+        {
+          "is": "loose",
+          "sq": "d7"
+        },
+        {
+          "is": "attacks",
+          "from": "d1",
+          "to": [
+            "d7"
+          ]
+        },
+        {
+          "is": "best",
+          "move": "d1d7"
+        },
+        {
+          "is": "wins",
+          "move": "d1d7",
+          "cp": 250
+        }
+      ]
+    },
+    {
+      "id": "nm-loose-bishop",
+      "kind": "near-miss",
+      "concepts": [
+        "loose",
+        "defended"
+      ],
+      "prompt": "Two almost identical positions. In one of them Nx@e5 wins a bishop for nothing.",
+      "a": "6k1/ppp2ppp/8/4b3/8/5N2/PPP2PPP/6K1 w - - 0 1",
+      "b": "6k1/pp3ppp/3p4/4b3/8/5N2/PPP2PPP/6K1 w - - 0 1",
+      "move": "f3e5",
+      "works": "a",
+      "diff": [
+        "c7",
+        "d6"
+      ],
+      "question": "In the other position, why doesn't Nx@e5 win?",
+      "choices": [
+        {
+          "text": "A pawn stands on @d6, where it guards @e5. The bishop is no longer loose.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "not-loose",
+              "sq": "e5"
+            },
+            {
+              "is": "attacks",
+              "from": "d6",
+              "to": [
+                "e5"
+              ]
+            }
+          ]
+        },
+        {
+          "text": "The knight can no longer reach @e5.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "illegal",
+              "move": "f3e5"
+            }
+          ]
+        },
+        {
+          "text": "The bishop now attacks the knight, so it can take first.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "attacks",
+              "from": "e5",
+              "to": [
+                "f3"
+              ]
+            }
+          ]
+        }
+      ],
+      "explain": "One pawn moved one square. In the first position the bishop is loose and Nx@e5 is free. In the second, the pawn takes back on @e5 and it is only knight for bishop."
+    },
+    {
+      "id": "pz-rxd7",
+      "kind": "puzzle",
+      "concepts": [
+        "loose"
+      ],
+      "prompt": "@W to move. Win material.",
+      "fen": "1r4k1/pb1n1ppp/8/8/8/2N2B2/PP3PPP/3R2K1 w - - 0 1",
+      "line": [
+        "d1d7"
+      ],
+      "goal": "win",
+      "scaffold": [
+        {
+          "prompt": "First, the question. Tap every loose @B piece.",
+          "find": {
+            "what": "loose",
+            "color": "b"
+          }
+        }
+      ],
+      "tempting": {
+        "move": "f3b7",
+        "refutation": [
+          "b8b7"
+        ],
+        "explain": "Bx@b7 takes a bishop, but the rook takes back: an even trade. Worse, the rook on @b7 now guards @d7, so the knight that was loose is not loose any more."
+      },
+      "reasons": {
+        "question": "Why does Rx@d7 win a piece?",
+        "choices": [
+          {
+            "text": "The knight on @d7 is loose, and the rook attacks it down the open file.",
+            "correct": true,
+            "claims": [
+              {
+                "is": "loose",
+                "sq": "d7"
+              },
+              {
+                "is": "attacks",
+                "from": "d1",
+                "to": [
+                  "d7"
+                ]
+              }
+            ]
+          },
+          {
+            "text": "After Rx@d7, the rook forks two @B pieces.",
+            "correct": false,
+            "claims": [
+              {
+                "after": [
+                  "d1d7"
+                ],
+                "is": "fork",
+                "sq": "d7"
+              }
+            ]
+          },
+          {
+            "text": "@B can take back on @d7, but it costs them a rook.",
+            "correct": false,
+            "claims": [
+              {
+                "after": [
+                  "d1d7"
+                ],
+                "is": "attackers",
+                "sq": "d7",
+                "by": "b",
+                "n": 1
+              }
+            ]
+          }
+        ]
+      },
+      "hints": [
+        "Which @B pieces are loose?",
+        "The knight on @d7 has no defender. What attacks it?",
+        "Your rook on @d1 looks straight up the file."
+      ],
+      "explain": "Loose piece, direct attack, free material. Notice what found the move: not a pattern you had memorised, but the question you asked first.",
+      "claims": [
+        {
+          "after": [
+            "f3b7",
+            "b8b7"
+          ],
+          "is": "not-loose",
+          "sq": "d7"
+        }
+      ]
+    },
+    {
+      "id": "tap-loose-white",
+      "kind": "tap",
+      "concepts": [
+        "loose",
+        "threats"
+      ],
+      "prompt": "Now the other half of the habit. Tap every loose @W piece.",
+      "fen": "2r3k1/pp1b1ppp/2n5/4p3/8/2N2N2/PPP2PPP/3R2K1 w - - 0 1",
+      "find": {
+        "what": "loose",
+        "color": "w"
+      },
+      "answer": [
+        "b2",
+        "c2"
+      ],
+      "explain": "The pawns on @b2 and @c2 have no protector. They are safe for now because nothing attacks them, but they are exactly what your opponent will be looking for. Your own loose pieces are their tactics."
+    },
+    {
+      "id": "choice-loose-or-not",
+      "kind": "choice",
+      "concepts": [
+        "loose",
+        "trades"
+      ],
+      "prompt": "Back to the first position of this lesson, with @W to move.",
+      "fen": "2r3k1/pp1b1ppp/2n5/4p3/8/2N2N2/PPP2PPP/3R2K1 w - - 0 1",
+      "arrow": [
+        "f3",
+        "e5"
+      ],
+      "question": "Nx@e5 also captures something. Why is it worse than Rx@d7?",
+      "choices": [
+        {
+          "text": "The pawn on @e5 is defended by the knight on @c6, so Nx@e5 Nx@e5 gives a knight for a pawn.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "defenders",
+              "sq": "e5",
+              "n": 1
+            },
+            {
+              "is": "attacks",
+              "from": "c6",
+              "to": [
+                "e5"
+              ]
+            },
+            {
+              "is": "not-best",
+              "move": "f3e5"
+            }
+          ]
+        },
+        {
+          "text": "Nx@e5 is just as good. Both moves win material.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "wins",
+              "move": "f3e5",
+              "cp": 150
+            }
+          ]
+        },
+        {
+          "text": "The pawn on @e5 is loose, but pawns are not worth taking.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "loose",
+              "sq": "e5"
+            }
+          ]
+        }
+      ],
+      "explain": "Both moves capture. Only one captures something loose."
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "id": "u1-explain",
+  "unit": 1,
+  "stage": "rhetoric",
+  "title": "Say why",
+  "summary": "Explain a move so someone else could check it, and answer objections with the board.",
+  "steps": [
+    {
+      "id": "rhetoric-intro",
+      "kind": "read",
+      "concepts": [
+        "loose",
+        "counting"
+      ],
+      "title": "Explaining is a skill",
+      "text": "Knowing that a move works is one thing. Being able to say why, in words someone else could check, is another. It is also the best test of whether you understood.\n\nIn this lesson a friend makes claims about positions. Some are right and some are wrong. Your job is to answer them with facts you can point to on the board: what is loose, what attacks what, and how the count comes out."
+    },
+    {
+      "id": "objection-count",
+      "kind": "choice",
+      "concepts": [
+        "counting"
+      ],
+      "prompt": "A friend looks at this position and says: \"Nx@e5 wins the bishop, because the bishop is attacked.\"",
+      "fen": "3r2k1/pp1n1ppp/8/4b3/8/5N1P/PP3PP1/R1B3K1 w - - 0 1",
+      "arrow": [
+        "f3",
+        "e5"
+      ],
+      "question": "What do you tell them?",
+      "choices": [
+        {
+          "text": "Attacked isn't enough. It's one attacker against one defender, so Nx@e5 Nx@e5 is only a trade.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "attackers",
+              "sq": "e5",
+              "by": "w",
+              "n": 1
+            },
+            {
+              "is": "defenders",
+              "sq": "e5",
+              "n": 1
+            },
+            {
+              "is": "not-wins",
+              "move": "f3e5",
+              "cp": 100
+            }
+          ]
+        },
+        {
+          "text": "They're right. An attacked piece is a lost piece.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "wins",
+              "move": "f3e5",
+              "cp": 150
+            }
+          ]
+        },
+        {
+          "text": "They're wrong because Nx@e5 is illegal.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "illegal",
+              "move": "f3e5"
+            }
+          ]
+        }
+      ],
+      "explain": "The answer names a fact anyone can check: count the pieces that bear on @e5."
+    },
+    {
+      "id": "objection-trade",
+      "kind": "choice",
+      "concepts": [
+        "trades"
+      ],
+      "prompt": "Your friend objects to Bx@a8: \"That's a bad trade. @B just takes the bishop back.\"",
+      "fen": "r5k1/2n2ppp/8/8/8/2N3P1/5PBP/6K1 w - - 0 1",
+      "arrow": [
+        "g2",
+        "a8"
+      ],
+      "question": "What's the best answer?",
+      "choices": [
+        {
+          "text": "@B does take back, but a trade is judged by what changes hands. A rook (5) for a bishop (3) is two points in @W's favour.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "value",
+              "role": "r",
+              "n": 5
+            },
+            {
+              "is": "value",
+              "role": "b",
+              "n": 3
+            },
+            {
+              "is": "best",
+              "move": "g2a8"
+            }
+          ]
+        },
+        {
+          "text": "@B can't take back, so it's free.",
+          "correct": false,
+          "claims": [
+            {
+              "after": [
+                "g2a8"
+              ],
+              "is": "illegal",
+              "move": "c7a8"
+            }
+          ]
+        },
+        {
+          "text": "You're right, it's bad. The rook is defended.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "not-best",
+              "move": "g2a8"
+            }
+          ]
+        }
+      ],
+      "explain": "A good answer agrees with what is true in the objection (the knight does recapture) and then shows why it doesn't matter."
+    },
+    {
+      "id": "objection-loose",
+      "kind": "choice",
+      "concepts": [
+        "loose",
+        "defended"
+      ],
+      "prompt": "Your friend points at the bishop on @e5 and says: \"Nx@e5 is a trade, knight for bishop, so it doesn't matter.\"",
+      "fen": "6k1/ppp2ppp/8/4b3/8/5N2/PPP2PPP/6K1 w - - 0 1",
+      "arrow": [
+        "f3",
+        "e5"
+      ],
+      "question": "How do you answer?",
+      "choices": [
+        {
+          "text": "There is no trade. The bishop is loose, so nothing takes the knight back.",
+          "correct": true,
+          "claims": [
+            {
+              "is": "loose",
+              "sq": "e5"
+            },
+            {
+              "after": [
+                "f3e5"
+              ],
+              "is": "attackers",
+              "sq": "e5",
+              "by": "b",
+              "n": 0
+            },
+            {
+              "is": "wins",
+              "move": "f3e5",
+              "cp": 250
+            }
+          ]
+        },
+        {
+          "text": "They're right. The pawn on @d6 takes back.",
+          "correct": false,
+          "claims": [
+            {
+              "is": "attacks",
+              "from": "d6",
+              "to": [
+                "e5"
+              ]
+            }
+          ]
+        },
+        {
+          "text": "They're right. The king takes back.",
+          "correct": false,
+          "claims": [
+            {
+              "after": [
+                "f3e5"
+              ],
+              "is": "attackers",
+              "sq": "e5",
+              "by": "b",
+              "n": 1
+            }
+          ]
+        }
+      ],
+      "explain": "The claim assumed a recapture. The quickest reply is to ask: with what?"
+    },
+    {
+      "id": "teach-back-u1",
+      "kind": "read",
+      "concepts": [
+        "loose",
+        "counting",
+        "threats"
+      ],
+      "title": "Teach it back",
+      "text": "Say this out loud, or write it down, before you reveal the model answer. Imagine explaining to a friend who knows how the pieces move but nothing else.",
+      "ask": {
+        "question": "In three or four sentences: how do you decide whether a capture wins material?",
+        "answer": "First ask whether the piece is loose. If it is, and you can capture it safely, it is free. If it is defended, count attackers and defenders, and look at values as well as numbers: capture with your cheapest piece first, and stop when the next capture would give back more than it takes. Then check what your move leaves loose on your own side."
+      }
+    }
+  ]
+}

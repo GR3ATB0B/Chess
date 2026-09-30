@@ -1,0 +1,6 @@
+node_modules/
+dist/
+public/engine/
+.DS_Store
+*.log
+.verify-cache.json

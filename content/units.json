@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "title": "Safety and counting",
+    "summary": "What pieces are worth, which ones are loose, and how to count an exchange before you start it.",
+    "lessons": ["u1-values", "u1-loose", "u1-counting", "u1-threats", "u1-explain"],
+    "game": "morphy-opera-1858"
+  },
+  {
+    "id": 2,
+    "title": "Core tactics: forks",
+    "summary": "One piece, two targets. Why forks work, when they fail, and how to build one.",
+    "lessons": ["u2-fork-grammar", "u2-fork-logic", "u2-fork-explain"]
+  }
+]
